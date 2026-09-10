@@ -10,10 +10,15 @@ check_package() {
     echo "[!] 'unzip' not found in PATH"
     read -p "[+] Download it? [Y/N]: " KUY
 
-    if [[ "$KUY" -eq "Y" || "$KUY" -eq "y" ]]; then
-      y | sudo pacman -S unzip
-    elif [[ "$KUY" -eq "N" || "$KUY" -eq "n" ]]; then
+    if [[ "$KUY" == "Y" || "$KUY" == "y" ]]; then
+      sudo pacman -S unzip --noconfirm
+      sleep 2
+      clear
+    elif [[ "$KUY" == "N" || "$KUY" == "n" ]]; then
       echo "[!] 'unzip' still not found in PATH!!"
+      exit $fail
+    else
+      echo "[!] Wrong choice!"
       exit $fail
     fi
   fi
@@ -42,7 +47,7 @@ extract() {
     echo -e "[+] Extracted!! Folder saved at: $path\n[<3] Enjoy!!"
     exit $success
   else
-    echo "[!] Extract failed! :("
+    echo -e "[!] Extract failed! :(\n[?] Wrong path or File doesn't exist."
     exit $fail
   fi
 }
